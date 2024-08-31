@@ -72,8 +72,8 @@ ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNToyNG1jeFhFV2prTW1uUXJNNEF1NEZER2hmZ2g1NmZnaDU
 Передвинем внутреннюю сеть на 192.168.4.0/24 чтобы она не конфликтовала ни с нашей, ни с тётиной домашней подсетью. Дадим маршрутизатору адрес 192.168.4.1   Удалим IPv6 
 
 Network – Interfaces  
-wan6 – Delete 
-lan – Edit, IPv4 address = 192.168.4.1 - Save 
+wan6 – Delete\
+lan – Edit, IPv4 address = 192.168.4.1 - Save\
 Save & Apply – Apply and keep settings 
 
 ###### Продолжаем настройку
