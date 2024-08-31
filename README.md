@@ -163,12 +163,11 @@ wget https://raw.githubusercontent.com/imakamon/puuilo/main/novpn.lst -O /etc/sh
 ```
 chmod +x /etc/shadowsocks-libev/update.sh
 ```
-Ну и, наконец, добавляем в crontab задания - выполнять его при загрузке и каждые два часа обновлять список адресов для захода мимо VPN.
+Ну и, наконец, добавляем в crontab задания - каждые два часа обновлять список адресов для захода мимо VPN.
 ```
 EDITOR=nano crontab -e
 ```
 ```
-@reboot /etc/shadowsocks-libev/update
 0 */2 * * * /etc/shadowsocks-libev/update
 ```
 Сохраняем. Жмём <Ctrl>+<X>, <Y> на предложение сохранить. <Enter>
