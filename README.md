@@ -82,9 +82,9 @@ Save & Apply – Apply and keep settings
 Подключаем WAN кабель в наш маршрутизатор\
 На ноутбуке проверяем что появился доступ в интернет - идём на 2ip.ru и видим, что мы пришли туда от нашего провайдера. 
 
-Установим пакеты для подключения к скрытному VPN от VPN Generator и настроим подключение 
-Заходим на маршрутизатор (на 192.168.4.1) через SSH 
-Ставим пакеты для работы с Shadowsocks 
+Установим пакеты для подключения к скрытному VPN от VPN Generator и настроим подключение\
+Заходим на маршрутизатор (на 192.168.4.1) через SSH\
+Ставим пакеты для работы с Shadowsocks
 ```
 opkg update 
  
@@ -96,33 +96,33 @@ opkg install luci-app-shadowsocks-libev
 
 Сверху добавилось меню Services 
 
-Services - shadowsocks-libev 
-Закладка Remote Servers 
-Import Links – В открывшееся окно вставляем ключ от VPN Generator – Import 
-Появилась новая учётная запись для сервера, название генерируется автоматом, у меня это “cfg08769c”  оно вообще нагенерит в нескольких местах похожие имена, их сразу видно. 
+Services - shadowsocks-libev\
+Закладка Remote Servers\
+Import Links – В открывшееся окно вставляем ключ от VPN Generator – Import\
+Появилась новая учётная запись для сервера, название генерируется автоматом, у меня это “cfg08769c”  оно вообще нагенерит в нескольких местах похожие имена, их сразу видно.\
 Жмём Save 
  
-Закладка Local instances 
-ss_tunnel.cfg0249c0 - Edit - Снимаем галку с Disable, в Remote server выбирам наш cfg08769c 
+Закладка Local instances\
+ss_tunnel.cfg0249c0 - Edit - Снимаем галку с Disable, в Remote server выбирам наш cfg08769c\
 Жмём Save 
 
-Настраиваем ss_redir  , давайте, например, править ss_redir.hj 
+Настраиваем ss_redir  , давайте, например, править ss_redir.hj
 
 ss_redir.hj - Edit - Снимаем галку с Disable, в Remote server выбирам наш cfg08769c Жмём Save 
  
-Идём в закладку Redir Rules 
-Откроется закладка General Settings 
-Убираем Disable, намтраиваем наш hj-tcp_and_udp в ss-redir для TCP и UDP 
-Local-out default = checkdst 
-Extra tcp expression вписываем tcp dport { 80, 443 } 
-Extra udp expression вписываем udp dport { 53 - 65535 } 
+Идём в закладку Redir Rules\
+Откроется закладка General Settings\
+Убираем Disable, намтраиваем наш hj-tcp_and_udp в ss-redir для TCP и UDP\
+Local-out default = checkdst\
+Extra tcp expression вписываем tcp dport { 80, 443 }\
+Extra udp expression вписываем udp dport { 53 - 65535 }\
 Жмём Save 
 
-В закладке Destination Settings – Очищаем Dst ip/net forward
-Dst default делаем  forward то есть пока всё завернём через прокси.
+В закладке Destination Settings – Очищаем Dst ip/net forward\
+Dst default делаем  forward то есть пока всё завернём через прокси.\
 Жмём Save & Apply  
 
-При желании можно проверить все настройки Shadowsocks в файле /etc/config/shadowsocks-libev
+При желании можно проверить все настройки Shadowsocks в файле /etc/config/shadowsocks-libev\
 После любых настроек Shadowsocks лучше перезапускать службу из консоли, чтобы изменения точно применились.
 ```
 /etc/init.d/shadowsocks-libev restart
@@ -139,27 +139,27 @@ opkg install nano
 ```
 wget https://raw.githubusercontent.com/imakamon/puuilo/main/novpn.lst -P /etc/shadowsocks-libev/ -q
 ```
-Выберем его в качестве списка адресов, куда трафик должен ходить мимо тоннеля. 
-В админке идём Services -  Shadowsocks-libev – Redir rules – Destination settings - Dst ip/net bypass file – Select file - выбираем novpn.lst - Save and Apply 
+Выберем его в качестве списка адресов, куда трафик должен ходить мимо тоннеля.\
+В админке идём Services -  Shadowsocks-libev – Redir rules – Destination settings - Dst ip/net bypass file – Select file - выбираем novpn.lst - Save and Apply\
 В консоли перезапускаем тоннель
 ```
 /etc/init.d/shadowsocks-libev restart
 ```
 Заходим на сайт 2ip.ru и снова видим российский адрес - он добавлен для проверок в список сайтов мимо VPN. А вот если зайти на https://www.iplocation.net/  - адрес будет как при заходе из-за границы. Хотя базы  у них с 2ip.ru разные и страна может различаться, у меня один показывал Нидерланды, а второй Великобританию.
 
-Настроим автоматическое обновление списка novpn. Нужно сделать скриптик. Идём в консоль. 
+Настроим автоматическое обновление списка novpn. Нужно сделать скриптик. Идём в консоль.
 ```
 nano /etc/shadowsocks-libev/update.sh
 ```
-Пишем скрипт 
+Пишем скрипт
 ```
 #!/bin/sh  
 wget https://raw.githubusercontent.com/imakamon/puuilo/main/novpn.lst -O /etc/shadowsocks-libev/novpn.lst -q 
 /etc/init.d/shadowsocks-libev restart
 ```
-Сохраняем. Жмём <Ctrl>+<X>, <Y> на предложение сохранить. Название файла не меняем жмём <Enter> 
+Сохраняем. Жмём <Ctrl>+<X>, <Y> на предложение сохранить. Название файла не меняем жмём <Enter>
 
-Делаем его исполняемым 
+Делаем его исполняемым
 ```
 chmod +x /etc/shadowsocks-libev/update.sh
 ```
@@ -173,15 +173,15 @@ EDITOR=nano crontab -e
 Сохраняем. Жмём <Ctrl>+<X>, <Y> на предложение сохранить. <Enter>
 
 Всё, осталось настроить WiFi. 
-В админке Network – Wireless - Строка с SSID задисейблена, её нужно настроить и сделать Enable.
-Edit, Задаём SSID: ESSID = Puuilo (ну или свой придумайте), 
-Закладка  Wireless Security
-Encryption = WPA2-PSK/WPA3-SAE Mixed
+В админке Network – Wireless - Строка с SSID задисейблена, её нужно настроить и сделать Enable.\
+Edit, Задаём имя сети - SSID: ESSID = Puuilo (ну или свой придумайте),\
+Закладка  Wireless Security\
+Encryption = WPA2-PSK/WPA3-SAE Mixed\
 Key = задаём пароль. Save и Enable. Save & Apply
 
-Если ещё не сделали - задаём пароль на маршрутизатор. System - Administration  
+Если ещё не сделали - задаём пароль на маршрутизатор. System - Administration
 
-Всё сохраняем.  Готово. Отправляем тёте и ждём от неё фотографий в Инстаграм, как она на даче вырастила укроп. 
+Всё сохраняем.  Готово. Отправляем тёте и ждём от неё фотографий в Инстаграм, как она на даче вырастила укроп.
 
 ## Вопрос - Ответ
 <b>Остальные устройства в сети тёти будут работать как прежде?</b> Да, без блокировок будут работать только устройства, подключенные к нашему маршрутизатору.
